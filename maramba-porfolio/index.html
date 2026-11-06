@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafael P. Maramba | Full Stack Software Developer</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.35);
+            --cyber-gradient: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #7c3aed 100%);
+            --cyber-gradient-alt: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            --cyber-glow: rgba(37, 99, 235, 0.25);
+            
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-surface-secondary: #f1f5f9;
+            --border-color: rgba(148, 163, 184, 0.2);
+            --border-hover: rgba(37, 99, 235, 0.4);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-heading: #0f172a;
+            
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --nav-height: 76px;
+            --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 10px -2px rgba(0, 0, 0, 0.02);
+            --card-shadow-hover: 0 20px 35px -10px rgba(37, 99, 235, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+            
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --code-font: 'Fira Code', monospace;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-bs-theme="dark"] {
+            --primary: #38bdf8;
+            --primary-hover: #60a5fa;
+            --secondary: #818cf8;
+            --accent: #fbbf24;
+            --accent-glow: rgba(251, 191, 36, 0.3);
+            --cyber-gradient: linear-gradient(135deg, #38bdf8 0%, #6366f1 50%, #a855f7 100%);
+            --cyber-gradient-alt: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --cyber-glow: rgba(56, 189, 248, 0.35);
+            
+            --bg-body: #090d16;
+            --bg-surface: #111827;
+            --bg-surface-secondary: #1a2234;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(56, 189, 248, 0.5);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-heading: #ffffff;
+            
+            --nav-bg: rgba(9, 13, 22, 0.85);
+            --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+            --card-shadow-hover: 0 20px 40px -10px rgba(56, 189, 248, 0.25);
+            
+            --glass-bg: rgba(17, 24, 39, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-height);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            transition: background-color 0.35s ease, color 0.35s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-heading);
+            letter-spacing: -0.02em;
+        }
+
+        /* Ambient Background Glowing Orbs */
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+            transition: all 0.5s ease;
+        }
+        .glow-top-right {
+            top: -150px;
+            right: -150px;
+            background: radial-gradient(circle, #38bdf8, #818cf8);
+        }
+        .glow-bottom-left {
+            bottom: -150px;
+            left: -150px;
+            background: radial-gradient(circle, #8b5cf6, #3b82f6);
+        }
+
+        /* Reading Progress Indicator */
+        #scrollProgressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--cyber-gradient);
+            z-index: 1050;
+            transition: width 0.1s ease;
+        }
+
+        /* Cyber Text Utility */
+        .cyber-text {
+            background: var(--cyber-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        /* Modern Glass Navbar */
+        .navbar {
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+            z-index: 1030;
+            padding: 1rem 0;
+        }
+
+        .navbar.scrolled {
+            padding: 0.65rem 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            border-bottom-color: var(--border-hover);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-brand .brand-badge {
+            background: var(--cyber-gradient);
+            color: #ffffff;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: var(--code-font);
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--text-muted) !important;
+            margin: 0 6px;
+            padding: 8px 12px !important;
+            border-radius: 8px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary) !important;
+            background-color: rgba(37, 99, 235, 0.06);
+        }
+
+        [data-bs-theme="dark"] .nav-link:hover, 
+        [data-bs-theme="dark"] .nav-link.active {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--cyber-gradient);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link.active::after {
+            width: 60%;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            background: var(--bg-surface-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+
+        .theme-toggle-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: rotate(20deg) scale(1.08);
+            box-shadow: 0 0 15px var(--cyber-glow);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .status-pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10b981;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Section Global Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title-wrap {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .section-title-line {
+            width: 50px;
+            height: 4px;
+            background: var(--cyber-gradient);
+            border-radius: 2px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px var(--cyber-glow);
+        }
+
+        /* Hero Section */
+        #personal-info {
+            min-height: calc(100vh - var(--nav-height));
+            display: flex;
+            align-items: center;
+            padding-top: calc(var(--nav-height) + 20px);
+            padding-bottom: 70px;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 40%);
+        }
+
+        .hero-lead {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
+        .hero-img-box {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .hero-img-box::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 30px;
+            background: var(--cyber-gradient);
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(18px);
+            transition: var(--transition-smooth);
+        }
+
+        .hero-img-box:hover::before {
+            opacity: 1;
+            filter: blur(25px);
+        }
+
+        .hero-img {
+            border-radius: 24px;
+            border: 4px solid var(--bg-surface);
+            box-shadow: var(--card-shadow);
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        /* Dynamic Profile Pose Transition & Animation */
+        .profile-pose-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 26px;
+            perspective: 1000px;
+            user-select: none;
+        }
+
+        .profile-images-stack {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 4px solid var(--bg-surface);
+            box-shadow: var(--card-shadow);
+            aspect-ratio: 3 / 4;
+            max-width: 390px;
+            margin: 0 auto;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease, border-color 0.4s ease;
+        }
+
+        .profile-pose-wrapper:hover .profile-images-stack,
+        .profile-pose-wrapper.pose-active .profile-images-stack {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 45px -10px var(--cyber-glow), 0 0 25px rgba(37, 99, 235, 0.3);
+            border-color: var(--primary);
+        }
+
+        /* Default Formal Pose */
+        .hero-img-default {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            z-index: 2;
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            filter: brightness(1) contrast(1);
+            transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), filter 0.65s ease;
+        }
+
+        /* Alternate Smiling Pose */
+        .hero-img-alternate {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            z-index: 3;
+            opacity: 0;
+            transform: scale(1.08) rotate(1.5deg);
+            filter: blur(4px) brightness(1.1);
+            transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), filter 0.65s ease;
+        }
+
+        /* Hover & Active States: Pose Transition */
+        .profile-pose-wrapper:hover .hero-img-default,
+        .profile-pose-wrapper.pose-active .hero-img-default {
+            opacity: 0;
+            transform: scale(0.93) rotate(-1.5deg);
+            filter: blur(3px) brightness(0.9);
+        }
+
+        .profile-pose-wrapper:hover .hero-img-alternate,
+        .profile-pose-wrapper.pose-active .hero-img-alternate {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            filter: blur(0px) brightness(1);
+        }
+
+        /* Cyber Holographic Light Sweep */
+        .pose-shine-overlay {
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 40%,
+                rgba(56, 189, 248, 0.5) 50%,
+                transparent 100%
+            );
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .profile-pose-wrapper:hover .pose-shine-overlay,
+        .profile-pose-wrapper.pose-active .pose-shine-overlay {
+            animation: poseShineSweep 0.85s ease-out forwards;
+        }
+
+        @keyframes poseShineSweep {
+            0% { left: -150%; }
+            100% { left: 150%; }
+        }
+
+        /* Interactive Floating Pose Indicator Badge */
+        .pose-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            transition: var(--transition-smooth);
+            pointer-events: none;
+        }
+
+        .profile-pose-wrapper:hover .pose-badge,
+        .profile-pose-wrapper.pose-active .pose-badge {
+            background: var(--cyber-gradient);
+            box-shadow: 0 6px 20px var(--cyber-glow);
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pose-badge-icon {
+            display: inline-block;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .profile-pose-wrapper:hover .pose-badge-icon,
+        .profile-pose-wrapper.pose-active .pose-badge-icon {
+            transform: rotate(180deg) scale(1.2);
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -15px;
+            left: -20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: floatBadge 3.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatBadge {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        /* Typewriter Cursor */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background-color: var(--primary);
+            margin-left: 4px;
+            vertical-align: -2px;
+            animation: blinkCursor 0.9s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Statistics Counter Strip */
+        .stat-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition-smooth);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--cyber-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        /* Universal Interactive 3D / Hover Cards */
+        .interactive-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.35s cubic-bezier(0.2, 0, 0.1, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        /* Category Filter Buttons */
+        .filter-btn {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .filter-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--cyber-gradient);
+            color: #ffffff !important;
+            border-color: transparent;
+            box-shadow: 0 4px 15px var(--cyber-glow);
+        }
+
+        /* Skill Cards & Animated Progress */
+        .skill-icon-wrap {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            background: var(--bg-surface-secondary);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .interactive-card:hover .skill-icon-wrap {
+            transform: scale(1.12) rotate(5deg);
+        }
+
+        .skill-progress-bar {
+            height: 7px;
+            border-radius: 10px;
+            background-color: var(--bg-surface-secondary);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--cyber-gradient);
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Education Timeline */
+        .timeline-box {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .timeline-box::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            bottom: 20px;
+            width: 3px;
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .timeline-entry {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .timeline-entry::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 24px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--bg-surface);
+            box-shadow: 0 0 0 3px var(--cyber-glow);
+            z-index: 2;
+            transition: var(--transition-smooth);
+        }
+
+        .timeline-entry:hover::before {
+            transform: scale(1.3);
+            background: var(--accent);
+            box-shadow: 0 0 0 5px var(--accent-glow);
+        }
+
+        /* Project Cards */
+        .project-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px 14px 0 0;
+            aspect-ratio: 16 / 10;
+        }
+
+        .project-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .interactive-card:hover .project-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .project-badge-category {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .tech-pill {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background-color: var(--bg-surface-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        /* Services Grid */
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            background: var(--bg-surface-secondary);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .interactive-card:hover .service-icon {
+            background: var(--cyber-gradient);
+            color: #ffffff !important;
+            transform: rotate(8deg) scale(1.1);
+            box-shadow: 0 8px 20px var(--cyber-glow);
+            border-color: transparent;
+        }
+
+        /* Custom Buttons */
+        .btn-custom {
+            background: var(--cyber-gradient);
+            color: #ffffff !important;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            box-shadow: 0 4px 15px var(--cyber-glow);
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--cyber-glow);
+        }
+
+        .btn-outline-custom {
+            background-color: transparent;
+            color: var(--text-main) !important;
+            border: 1.5px solid var(--border-color);
+            padding: 12px 26px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-outline-custom:hover {
+            border-color: var(--primary);
+            color: var(--primary) !important;
+            transform: translateY(-3px);
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Interactive Contact Form */
+        .form-floating > .form-control {
+            background-color: var(--bg-surface);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 12px;
+            transition: var(--transition-smooth);
+        }
+
+        .form-floating > .form-control:focus {
+            background-color: var(--bg-surface);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--cyber-glow);
+            color: var(--text-main);
+        }
+
+        .form-floating > label {
+            color: var(--text-muted);
+        }
+
+        .char-counter {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Interactive Copy Box */
+        .copy-pill {
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: 1.5px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .copy-pill:hover {
+            border-color: var(--primary);
+            background-color: rgba(37, 99, 235, 0.04);
+            transform: translateY(-2px);
+        }
+
+        /* Floating Back-To-Top Button */
+        #backToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--cyber-gradient);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 6px 20px var(--cyber-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition-smooth);
+            z-index: 1040;
+        }
+
+        #backToTopBtn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #backToTopBtn:hover {
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 10px 25px var(--cyber-glow);
+        }
+
+        /* Floating Toast Notification */
+        .custom-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            padding: 12px 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px var(--cyber-glow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1060;
+        }
+
+        .custom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-35px);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(35px);
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active, .reveal-left.active, .reveal-right.active {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        /* Project Modal Polish */
+        .modal-content {
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: var(--bg-surface);
+                padding: 20px;
+                border-radius: 16px;
+                margin-top: 15px;
+                border: 1px solid var(--border-color);
+                box-shadow: var(--card-shadow);
+            }
+            .nav-link::after {
+                display: none;
+            }
+            .floating-badge {
+                position: static;
+                margin-top: 20px;
+                display: inline-flex;
+            }
+            section {
+                padding: 70px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glowing Background Elements -->
+    <div class="ambient-glow glow-top-right"></div>
+    <div class="ambient-glow glow-bottom-left"></div>
+
+    <!-- Reading Progress Bar -->
+    <div id="scrollProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#personal-info" id="brandLogo">
+                <span class="cyber-text fw-bold">Maramba</span>
+                <span class="brand-badge">&lt;Dev/&gt;</span>
+            </a>
+            
+            <div class="d-flex align-items-center gap-2 order-lg-3">
+                <!-- Theme Toggle Button with Event Listener -->
+                <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Color Theme" title="Switch Theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+
+                <button class="navbar-toggler border-0 p-2 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars fs-4" style="color: var(--text-main);"></i>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse order-lg-2" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link active" href="#personal-info">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacts">Contacts</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Personal Info) -->
+    <section id="personal-info">
+        <div class="container">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-7 reveal-left">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="status-badge">
+                            <span class="status-pulse"></span>
+                            Available for Projects & Internships
+                        </div>
+                    </div>
+
+                    <h1 class="display-3 fw-bold mb-2">
+                        Hi, I'm <span class="cyber-text">Rafael P. Maramba</span>
+                    </h1>
+
+                    <h2 class="h3 fw-semibold mb-4 d-flex align-items-center flex-wrap" style="color: var(--text-main);">
+                        I am a&nbsp;<span id="typewriterText" class="cyber-text fw-bold"></span><span class="typewriter-cursor"></span>
+                    </h2>
+
+                    <p class="hero-lead mb-4 pe-lg-4">
+                        Passionate about crafting high-performance full-stack web applications, designing interactive user experiences, and architecting elegant software solutions. Welcome to my digital workspace.
+                    </p>
+
+                    <!-- Interactive Action Buttons -->
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <a href="#projects" class="btn btn-custom">
+                            <span>Explore My Work</span>
+                            <i class="fas fa-arrow-down ms-1"></i>
+                        </a>
+                        <a href="#contacts" class="btn btn-outline-custom">
+                            <i class="fas fa-paper-plane me-1"></i>
+                            <span>Get in Touch</span>
+                        </a>
+                    </div>
+
+                    <!-- Social Direct Links -->
+                    <div class="d-flex align-items-center gap-3 pt-2">
+                        <span class="text-muted fw-semibold small">Connect:</span>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom rounded-circle p-2" style="width: 38px; height: 38px;" title="GitHub Profile">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom rounded-circle p-2" style="width: 38px; height: 38px;" title="LinkedIn Profile">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom rounded-circle p-2" style="width: 38px; height: 38px;" title="Facebook Profile">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <button class="btn btn-sm btn-outline-custom rounded-pill px-3 py-1 small copy-email-btn" data-email="rmaramba08@gmail.com" title="Copy Email Address">
+                            <i class="fas fa-copy me-1"></i> Copy Email
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Image with Dynamic Pose Morph & Floating Badge -->
+                <div class="col-lg-5 text-center reveal-right">
+                    <div class="hero-img-box profile-pose-wrapper" id="profilePoseContainer" title="Hover or tap to toggle posing!">
+                        <!-- Interactive Tooltip / Pose indicator badge at top-right -->
+                        <div class="pose-badge" id="poseBadge">
+                            <span class="pose-badge-icon" id="poseBadgeIcon"><i class="fas fa-camera-rotate"></i></span>
+                            <span class="pose-badge-text" id="poseBadgeText">Hover to Pose</span>
+                        </div>
+
+                        <!-- Stacked Dual-Pose Images -->
+                        <div class="profile-images-stack" id="profileImagesStack">
+                            <!-- Default Formal Pose -->
+                            <img src="Gemini_Generated_Image_w17dfuw17dfuw17d.jpg" alt="Rafael P. Maramba - Formal Pose" class="hero-img-default" width="400" height="480">
+                            <!-- Alternate Warm Smiling Pose -->
+                            <img src="profile_hover_pose.jpg" alt="Rafael P. Maramba - Welcoming Smile Pose" class="hero-img-alternate" width="400" height="480">
+                            <!-- Cyber Hologram Shine Effect -->
+                            <div class="pose-shine-overlay"></div>
+                        </div>
+
+                        <div class="floating-badge">
+                            <div class="rounded-circle p-2 bg-primary bg-opacity-10 text-primary">
+                                <i class="fas fa-graduation-cap fs-4"></i>
+                            </div>
+                            <div class="text-start">
+                                <div class="fw-bold small" style="color: var(--text-main);">BS Information Technology</div>
+                                <div class="text-muted small">NCST Undergraduate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animated Statistics Strip -->
+            <div class="row g-4 mt-5 pt-3 reveal" id="statsStrip">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="3">0</div>
+                        <div class="text-muted fw-semibold small">Education Milestones</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="text-muted fw-semibold small">Technologies Mastered</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="3">0</div>
+                        <div class="text-muted fw-semibold small">Featured Projects</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="text-muted fw-semibold small">% Dedication & Code Quality</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Background Section -->
+    <section id="education" style="background-color: var(--bg-surface);">
+        <div class="container">
+            <div class="section-title-wrap reveal">
+                <span class="section-subtitle">Academic Journey</span>
+                <h2 class="section-title">Educational Background</h2>
+                <div class="section-title-line"></div>
+            </div>
+
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-7">
+                    <div class="timeline-box">
+                        
+                        <!-- Timeline Entry 1 -->
+                        <div class="timeline-entry reveal">
+                            <div class="interactive-card p-4">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                                    <h5 class="fw-bold mb-0">Bachelor of Science in Information Technology</h5>
+                                    <span class="badge rounded-pill" style="background: var(--cyber-gradient); color: #ffffff;">2024 - 2028</span>
+                                </div>
+                                <h6 class="cyber-text fw-bold mb-3">
+                                    <i class="fas fa-university me-1"></i> National College of Science and Technology
+                                </h6>
+                                <p class="text-muted mb-0 small" style="line-height: 1.6;">
+                                    Currently pursuing an in-depth curriculum focusing on full-stack development, distributed databases, software engineering principles, and scalable cloud systems. Actively architecting end-to-end applications and collaborating on technical team initiatives.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Entry 2 -->
+                        <div class="timeline-entry reveal" style="transition-delay: 0.15s;">
+                            <div class="interactive-card p-4">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                                    <h5 class="fw-bold mb-0">Senior High School - STEM Strand</h5>
+                                    <span class="badge rounded-pill" style="background: var(--cyber-gradient); color: #ffffff;">2023 - 2024</span>
+                                </div>
+                                <h6 class="cyber-text fw-bold mb-3">
+                                    <i class="fas fa-school me-1"></i> Maranatha Christian Academy, Inc.
+                                </h6>
+                                <p class="text-muted mb-0 small" style="line-height: 1.6;">
+                                    Graduated under the Science, Technology, Engineering, and Mathematics (STEM) strand with honours. Built rigorous foundations in algorithmic problem solving, calculus, and introductory software development concepts.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Entry 3 -->
+                        <div class="timeline-entry reveal" style="transition-delay: 0.3s;">
+                            <div class="interactive-card p-4">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                                    <h5 class="fw-bold mb-0">Junior High School</h5>
+                                    <span class="badge rounded-pill" style="background: var(--cyber-gradient); color: #ffffff;">2021 - 2023</span>
+                                </div>
+                                <h6 class="cyber-text fw-bold mb-3">
+                                    <i class="fas fa-award me-1"></i> Prince Aris Christian School
+                                </h6>
+                                <p class="text-muted mb-0 small" style="line-height: 1.6;">
+                                    Cultivated strong analytical rigor and early curiosity for computer science, robotics, and creative digital media, participating in tech competitions and academic exhibitions.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Graduation Portrait -->
+                <div class="col-lg-5 text-center reveal-right">
+                    <div class="hero-img-box">
+                        <img src="Gemini_Generated_Image_b6h612b6h612b6h6.jpg" alt="Graduation Portrait - Rafael P. Maramba" class="hero-img" width="380" height="470">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section with Interactive Category Filter -->
+    <section id="skills" style="background-color: var(--bg-body);">
+        <div class="container">
+            <div class="section-title-wrap reveal">
+                <span class="section-subtitle">Technical Expertise</span>
+                <h2 class="section-title">My Skills & Stack</h2>
+                <div class="section-title-line"></div>
+                <p class="text-muted mt-3 mx-auto" style="max-width: 650px;">
+                    A curated collection of languages, frameworks, databases, and design tools I leverage to engineer performant digital experiences.
+                </p>
+            </div>
+
+            <!-- Skill Category Filter Buttons with Event Listeners -->
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-5 reveal" id="skillFilterContainer">
+                <button class="filter-btn active" data-category="all">
+                    <i class="fas fa-th-large me-1"></i> All Technologies
+                </button>
+                <button class="filter-btn" data-category="backend">
+                    <i class="fas fa-server me-1"></i> Backend & DB
+                </button>
+                <button class="filter-btn" data-category="frontend">
+                    <i class="fas fa-code me-1"></i> Frontend & UI
+                </button>
+                <button class="filter-btn" data-category="tools">
+                    <i class="fas fa-tools me-1"></i> Tools & Design
+                </button>
+            </div>
+
+            <!-- Skill Cards Grid -->
+            <div class="row g-4" id="skillsGrid">
+                
+                <!-- PHP -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="backend">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap text-primary">
+                                <i class="fab fa-php"></i>
+                            </div>
+                            <span class="badge bg-primary bg-opacity-10 text-primary">Backend</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">PHP</h5>
+                        <p class="text-muted small mb-3">Building server-side logic, secure authentication, and robust REST APIs.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">85%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MySQL -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="backend" style="transition-delay: 0.1s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap text-info">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <span class="badge bg-info bg-opacity-10 text-info">Database</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">MySQL</h5>
+                        <p class="text-muted small mb-3">Relational schema modeling, index optimization, and complex query structuring.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">80%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vue.js -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="frontend" style="transition-delay: 0.2s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap text-success">
+                                <i class="fab fa-vuejs"></i>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success">Frontend</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Vue.js</h5>
+                        <p class="text-muted small mb-3">Reactive single-page application development, Pinia state, and router flows.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">75%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bootstrap 5 -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="frontend" style="transition-delay: 0.3s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap" style="color: #7952b3;">
+                                <i class="fab fa-bootstrap"></i>
+                            </div>
+                            <span class="badge bg-opacity-10" style="background-color: #7952b3; color: #7952b3;">CSS Framework</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Bootstrap 5</h5>
+                        <p class="text-muted small mb-3">Mobile-first grid systems, modern responsive styling, and utility customization.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">90%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="90"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="backend">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap text-warning">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <span class="badge bg-warning bg-opacity-10 text-warning">Language</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Python</h5>
+                        <p class="text-muted small mb-3">Django web development, GIS data processing, scripts, and automated workflows.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">80%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Java -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="backend" style="transition-delay: 0.1s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap text-danger">
+                                <i class="fab fa-java"></i>
+                            </div>
+                            <span class="badge bg-danger bg-opacity-10 text-danger">Language</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Java</h5>
+                        <p class="text-muted small mb-3">Object-oriented architecture, multi-tier systems, and JavaFX desktop applications.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">75%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="frontend" style="transition-delay: 0.2s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap text-warning">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <span class="badge bg-warning bg-opacity-10 text-warning">Core Web</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">JavaScript (ES6+)</h5>
+                        <p class="text-muted small mb-3">Modern asynchronous features, DOM manipulation, Fetch API, and interactive event flows.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">85%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Git & GitHub -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="tools" style="transition-delay: 0.3s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap" style="color: #F05032;">
+                                <i class="fab fa-git-alt"></i>
+                            </div>
+                            <span class="badge bg-opacity-10" style="background-color: #F05032; color: #F05032;">DevOps</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Git & GitHub</h5>
+                        <p class="text-muted small mb-3">Branching strategies, version control, conflict resolution, and collaborative repo flows.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">85%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Figma -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="tools">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap" style="color: #F24E1E;">
+                                <i class="fab fa-figma"></i>
+                            </div>
+                            <span class="badge bg-opacity-10" style="background-color: #F24E1E; color: #F24E1E;">Design</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Figma</h5>
+                        <p class="text-muted small mb-3">Wireframing, UI/UX prototyping, design systems, and responsive component libraries.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">80%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canva -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="tools" style="transition-delay: 0.1s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap" style="color: #00C4CC;">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <span class="badge bg-opacity-10" style="background-color: #00C4CC; color: #00C4CC;">Media</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Canva</h5>
+                        <p class="text-muted small mb-3">Branding assets, social media presentation decks, and vector marketing illustrations.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">85%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adobe Animate -->
+                <div class="col-md-6 col-lg-3 skill-card-item reveal" data-category="tools" style="transition-delay: 0.2s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="skill-icon-wrap" style="color: #FF2600;">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <span class="badge bg-opacity-10" style="background-color: #FF2600; color: #FF2600;">Animation</span>
+                        </div>
+                        <h5 class="fw-bold mb-2">Adobe Animate</h5>
+                        <p class="text-muted small mb-3">Interactive 2D animations, character keyframing, and rich vector storytelling.</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small fw-semibold text-muted mb-1">
+                                <span>Proficiency</span>
+                                <span class="cyber-text">70%</span>
+                            </div>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" data-progress="70"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section with Filtering & Interactive Modals -->
+    <section id="projects" style="background-color: var(--bg-surface);">
+        <div class="container">
+            <div class="section-title-wrap reveal">
+                <span class="section-subtitle">Portfolio Showcase</span>
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="section-title-line"></div>
+                <p class="text-muted mt-3 mx-auto" style="max-width: 650px;">
+                    Real-world applications engineered to solve genuine problems with clean architectures and intuitive interfaces.
+                </p>
+            </div>
+
+            <!-- Project Filter Buttons with Event Listeners -->
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-5 reveal" id="projectFilterContainer">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web">Web Applications</button>
+                <button class="filter-btn" data-filter="desktop">Desktop Software</button>
+                <button class="filter-btn" data-filter="gis">GIS & Python</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="row g-4" id="projectsGrid">
+                
+                <!-- Project 1 -->
+                <div class="col-md-6 col-lg-4 project-card-item reveal" data-category="web">
+                    <div class="interactive-card h-100 d-flex flex-column" data-tilt>
+                        <div class="project-img-wrapper">
+                            <img src="Screenshot 2026-09-30 225649.png" alt="University Enrollment System">
+                            <span class="project-badge-category">Full Stack Web</span>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <h5 class="fw-bold mb-2">University Enrollment System</h5>
+                            <p class="text-muted small mb-4">
+                                A comprehensive university platform for streamlining student registrations, automated tuition calculations, and curriculum management.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="tech-pill">PHP</span>
+                                <span class="tech-pill">MySQL</span>
+                                <span class="tech-pill">Bootstrap 5</span>
+                                <span class="tech-pill">JavaScript</span>
+                            </div>
+                            <div class="mt-auto d-flex gap-2">
+                                <button class="btn btn-sm btn-custom flex-grow-1 view-project-btn" 
+                                    data-title="University Enrollment System"
+                                    data-category="Full Stack Web Application"
+                                    data-img="Screenshot 2026-09-30 225649.png"
+                                    data-desc="This platform automates the entire academic enrollment lifecycle for universities. Features include role-based access for registrars and students, automated class schedule collision checks, PDF invoice generation, and real-time database transactions built with PHP and MySQL."
+                                    data-tags="PHP,MySQL,Bootstrap 5,JavaScript,Apache"
+                                    data-github="https://github.com">
+                                    <i class="fas fa-eye me-1"></i> Quick View
+                                </button>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom" title="View Source Code">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="col-md-6 col-lg-4 project-card-item reveal" data-category="gis" style="transition-delay: 0.15s;">
+                    <div class="interactive-card h-100 d-flex flex-column" data-tilt>
+                        <div class="project-img-wrapper">
+                            <img src="Screenshot 2026-09-30 225735.png" alt="City Mapping Application">
+                            <span class="project-badge-category">GIS & Python</span>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <h5 class="fw-bold mb-2">City Mapping Application</h5>
+                            <p class="text-muted small mb-4">
+                                Interactive GIS mapping platform providing real-time data visualization of urban infrastructure and geospatial points of interest.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="tech-pill">Vue.js</span>
+                                <span class="tech-pill">Python (Django)</span>
+                                <span class="tech-pill">Leaflet / GIS</span>
+                                <span class="tech-pill">REST API</span>
+                            </div>
+                            <div class="mt-auto d-flex gap-2">
+                                <button class="btn btn-sm btn-custom flex-grow-1 view-project-btn"
+                                    data-title="City Mapping Application"
+                                    data-category="GIS & Geospatial Visualization"
+                                    data-img="Screenshot 2026-09-30 225735.png"
+                                    data-desc="An interactive GIS mapping web application designed for visualizing municipal resources and city zone data. Integrates Vue.js reactive frontend with Python Django backend, supporting polygon layer toggles, location searches, and high-frequency geo-coordinate updates."
+                                    data-tags="Vue.js,Python,Django,Leaflet API,GeoJSON"
+                                    data-github="https://github.com">
+                                    <i class="fas fa-eye me-1"></i> Quick View
+                                </button>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom" title="View Source Code">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="col-md-6 col-lg-4 project-card-item reveal" data-category="desktop" style="transition-delay: 0.3s;">
+                    <div class="interactive-card h-100 d-flex flex-column" data-tilt>
+                        <div class="project-img-wrapper">
+                            <img src="Screenshot 2026-09-30 225758.png" alt="Inventory Management System">
+                            <span class="project-badge-category">Desktop Enterprise</span>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <h5 class="fw-bold mb-2">Inventory Management System</h5>
+                            <p class="text-muted small mb-4">
+                                High-performance desktop application for businesses to monitor stock levels, print barcodes, and generate analytics reports.
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="tech-pill">Java</span>
+                                <span class="tech-pill">JavaFX</span>
+                                <span class="tech-pill">SQLite / MySQL</span>
+                                <span class="tech-pill">JasperReports</span>
+                            </div>
+                            <div class="mt-auto d-flex gap-2">
+                                <button class="btn btn-sm btn-custom flex-grow-1 view-project-btn"
+                                    data-title="Inventory Management System"
+                                    data-category="Desktop Enterprise Software"
+                                    data-img="Screenshot 2026-09-30 225758.png"
+                                    data-desc="Engineered with Java and modern JavaFX UI controls, this desktop application delivers lightning-fast offline stock bookkeeping for enterprises. Features include automatic low-stock notifications, supplier tracking, receipt generation, and encrypted user roles."
+                                    data-tags="Java,JavaFX,SQLite,Enterprise Architecture"
+                                    data-github="https://github.com">
+                                    <i class="fas fa-eye me-1"></i> Quick View
+                                </button>
+                                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom" title="View Source Code">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" style="background-color: var(--bg-body);">
+        <div class="container">
+            <div class="section-title-wrap reveal">
+                <span class="section-subtitle">What I Offer</span>
+                <h2 class="section-title">My Services</h2>
+                <div class="section-title-line"></div>
+                <p class="text-muted mt-3 mx-auto" style="max-width: 650px;">
+                    Comprehensive software engineering and technical solutions designed with quality, performance, and attention to detail.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="service-icon text-primary">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Web Development</h5>
+                        <p class="text-muted small mb-0">
+                            Designing custom, high-speed, and mobile-responsive websites and complex Single Page Applications (SPAs) tailored to modern business requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal" style="transition-delay: 0.1s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="service-icon text-info">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Desktop Applications</h5>
+                        <p class="text-muted small mb-0">
+                            Engineering reliable standalone desktop software using Java and modern graphical frameworks for enterprise point-of-sale and administrative tools.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal" style="transition-delay: 0.2s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="service-icon text-success">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Database Management</h5>
+                        <p class="text-muted small mb-0">
+                            Architecting normalized relational schemas, query tuning, data migration, and data integrity safeguards in MySQL and relational engines.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="service-icon text-warning">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Quality Assurance</h5>
+                        <p class="text-muted small mb-0">
+                            Conducting rigorous functional test scripts, stress testing, edge-case evaluations, and regression tests to guarantee bug-free deployments.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal" style="transition-delay: 0.1s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="service-icon" style="color: #ec4899;">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Beta Testing & UX Audits</h5>
+                        <p class="text-muted small mb-0">
+                            Detailed usability assessments, feedback reporting, and user flow heuristics to ensure applications provide seamless and delighting navigation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal" style="transition-delay: 0.2s;">
+                    <div class="interactive-card p-4 h-100 d-flex flex-column" data-tilt>
+                        <div class="service-icon text-primary">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">IT & Hardware Support</h5>
+                        <p class="text-muted small mb-0">
+                            Hardware diagnostics, system upgrades, network configuration troubleshooting, and technical operating system installations.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacts Section with Interactive Form & Live Validation -->
+    <section id="contacts" style="background-color: var(--bg-surface);">
+        <div class="container">
+            <div class="section-title-wrap reveal">
+                <span class="section-subtitle">Get in Touch</span>
+                <h2 class="section-title">Let's Connect & Collaborate</h2>
+                <div class="section-title-line"></div>
+                <p class="text-muted mt-3 mx-auto" style="max-width: 650px;">
+                    Have an exciting project idea, internship opportunity, or question? Send me a message and I'll respond as soon as possible.
+                </p>
+            </div>
+
+            <div class="row g-5 align-items-stretch">
+                
+                <!-- Left: Contact Details & Quick Links -->
+                <div class="col-lg-5 reveal-left">
+                    <div class="d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <h4 class="fw-bold mb-3">Direct Contact Info</h4>
+                            <p class="text-muted small mb-4">
+                                I am always open to discussing new software development projects, creative tech ideas, or professional opportunities.
+                            </p>
+
+                            <!-- Copy Email Pill with Event Listener -->
+                            <div class="interactive-card p-3 mb-3 copy-pill d-flex align-items-center justify-content-between copy-email-btn" data-email="rmaramba08@gmail.com" title="Click to copy email">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="rounded-circle p-2 bg-danger bg-opacity-10 text-danger fs-5 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-muted small fw-semibold">Email Address</div>
+                                        <div class="fw-bold text-main" id="emailDisplay">rmaramba08@gmail.com</div>
+                                    </div>
+                                </div>
+                                <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2 small">
+                                    <i class="fas fa-copy me-1"></i> Copy
+                                </span>
+                            </div>
+
+                            <!-- Facebook Direct Link -->
+                            <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                                <div class="interactive-card p-3 mb-3 d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-circle p-2 bg-primary bg-opacity-10 text-primary fs-5 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-muted small fw-semibold">Facebook</div>
+                                            <div class="fw-bold" style="color: var(--text-main);">Raffy Padernal</div>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-arrow-up-right-from-square text-muted"></i>
+                                </div>
+                            </a>
+
+                            <!-- Location Info -->
+                            <div class="interactive-card p-3 mb-3 d-flex align-items-center gap-3">
+                                <div class="rounded-circle p-2 bg-success bg-opacity-10 text-success fs-5 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                    <i class="fas fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <div class="text-muted small fw-semibold">Location</div>
+                                    <div class="fw-bold" style="color: var(--text-main);">Cavite / Metro Manila, Philippines</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Availability Card -->
+                        <div class="p-4 rounded-4 mt-4" style="background: rgba(37, 99, 235, 0.05); border: 1px dashed var(--primary);">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="status-pulse"></span>
+                                <span class="fw-bold small" style="color: var(--primary);">Currently Available</span>
+                            </div>
+                            <p class="text-muted small mb-0">
+                                Open to freelance contracts, internships, and technical junior software developer positions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Contact Form with Validation -->
+                <div class="col-lg-7 reveal-right">
+                    <div class="interactive-card p-4 p-md-5">
+                        <h4 class="fw-bold mb-4">Send a Direct Message</h4>
+                        
+                        <form id="contactForm" novalidate>
+                            <div class="row g-3">
+                                <!-- Name Input -->
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="contactName" placeholder="Your Name" required minlength="2">
+                                        <label for="contactName"><i class="fas fa-user me-2"></i>Full Name *</label>
+                                        <div class="invalid-feedback">Please enter your name (at least 2 characters).</div>
+                                    </div>
+                                </div>
+
+                                <!-- Email Input -->
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="contactEmail" placeholder="name@example.com" required>
+                                        <label for="contactEmail"><i class="fas fa-envelope me-2"></i>Email Address *</label>
+                                        <div class="invalid-feedback">Please provide a valid email address.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Subject Input -->
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="contactSubject" placeholder="Project Inquiry" required minlength="4">
+                                        <label for="contactSubject"><i class="fas fa-tag me-2"></i>Subject *</label>
+                                        <div class="invalid-feedback">Please enter a subject (at least 4 characters).</div>
+                                    </div>
+                                </div>
+
+                                <!-- Message Textarea with Character Counter -->
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Write your message here" id="contactMessage" style="height: 140px" required minlength="10" maxlength="500"></textarea>
+                                        <label for="contactMessage"><i class="fas fa-comment me-2"></i>Your Message *</label>
+                                        <div class="invalid-feedback">Please write a message (at least 10 characters).</div>
+                                    </div>
+                                    <div class="char-counter" id="messageCharCounter">0 / 500 characters</div>
+                                </div>
+
+                                <!-- Submit Button with Loading State -->
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-custom w-100 py-3" id="submitFormBtn">
+                                        <span id="submitBtnSpinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                        <i class="fas fa-paper-plane me-2" id="submitBtnIcon"></i>
+                                        <span id="submitBtnText">Send Message</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5" style="background-color: #0b0f19; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+        <div class="container text-center">
+            <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
+                <a href="#personal-info" class="text-decoration-none">
+                    <span class="cyber-text fw-bold fs-4">Rafael P. Maramba</span>
+                </a>
+            </div>
+            <p class="small mb-3" style="max-width: 500px; margin: 0 auto;">
+                Building scalable web architectures, engaging user interfaces, and robust digital systems.
+            </p>
+            <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#personal-info" class="text-muted text-decoration-none small hover-link">About</a>
+                <span>&bull;</span>
+                <a href="#education" class="text-muted text-decoration-none small hover-link">Education</a>
+                <span>&bull;</span>
+                <a href="#skills" class="text-muted text-decoration-none small hover-link">Skills</a>
+                <span>&bull;</span>
+                <a href="#projects" class="text-muted text-decoration-none small hover-link">Projects</a>
+                <span>&bull;</span>
+                <a href="#contacts" class="text-muted text-decoration-none small hover-link">Contacts</a>
+            </div>
+            <div class="border-top border-secondary border-opacity-10 pt-4 mt-2">
+                <small>&copy; 2026 Rafael P. Maramba. Crafted with Bootstrap 5 & Vanilla JS.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Back to Top Button -->
+    <button id="backToTopBtn" aria-label="Back to Top" title="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Toast Notification Element -->
+    <div id="toastNotification" class="custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <i class="fas fa-check-circle text-success fs-5" id="toastIcon"></i>
+        <span id="toastMessage">Action completed successfully!</span>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div class="modal fade" id="projectDetailsModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary small mb-1" id="modalProjectCategory">Application</span>
+                        <h4 class="modal-title fw-bold" id="modalProjectTitle">Project Title</h4>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="rounded-3 overflow-hidden mb-4 shadow-sm" style="max-height: 380px;">
+                        <img src="" id="modalProjectImg" alt="Project Screenshot" class="w-100 h-100 object-fit-cover">
+                    </div>
+                    <h6 class="fw-bold mb-2">Project Overview</h6>
+                    <p class="text-muted small mb-4" id="modalProjectDesc" style="line-height: 1.7;"></p>
+                    
+                    <h6 class="fw-bold mb-2">Technologies Used</h6>
+                    <div class="d-flex flex-wrap gap-2 mb-3" id="modalProjectTags"></div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Close</button>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-custom" id="modalGithubBtn">
+                        <i class="fab fa-github me-1"></i> View Repository
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Vanilla JavaScript with Event Listeners -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Select DOM Elements
+            const htmlElement = document.documentElement;
+            const themeToggleBtn = document.getElementById("themeToggle");
+            const themeIcon = document.getElementById("themeIcon");
+            const scrollProgressBar = document.getElementById("scrollProgressBar");
+            const navbar = document.getElementById("mainNav");
+            const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+            const navbarCollapse = document.querySelector(".navbar-collapse");
+            const sections = document.querySelectorAll("section");
+            const backToTopBtn = document.getElementById("backToTopBtn");
+            const typewriterElement = document.getElementById("typewriterText");
+            const contactForm = document.getElementById("contactForm");
+            const contactMessage = document.getElementById("contactMessage");
+            const messageCharCounter = document.getElementById("messageCharCounter");
+            const submitFormBtn = document.getElementById("submitFormBtn");
+            const submitBtnSpinner = document.getElementById("submitBtnSpinner");
+            const submitBtnIcon = document.getElementById("submitBtnIcon");
+            const submitBtnText = document.getElementById("submitBtnText");
+            const toastEl = document.getElementById("toastNotification");
+            const toastMessageEl = document.getElementById("toastMessage");
+            const toastIconEl = document.getElementById("toastIcon");
+
+            let toastTimeout = null;
+
+            // ==========================================
+            // 1. Toast Notification Helper
+            // ==========================================
+            function showToast(message, isSuccess = true) {
+                if (toastTimeout) clearTimeout(toastTimeout);
+                
+                toastMessageEl.textContent = message;
+                if (isSuccess) {
+                    toastIconEl.className = "fas fa-check-circle text-success fs-5";
+                } else {
+                    toastIconEl.className = "fas fa-exclamation-circle text-danger fs-5";
+                }
+                
+                toastEl.classList.add("show");
+                toastTimeout = setTimeout(() => {
+                    toastEl.classList.remove("show");
+                }, 3500);
+            }
+
+            // ==========================================
+            // 2. Theme Toggle with Event Listener & Storage
+            // ==========================================
+            const savedTheme = localStorage.getItem("portfolio_theme") || "light";
+            htmlElement.setAttribute("data-bs-theme", savedTheme);
+            updateThemeIcon(savedTheme);
+
+            function updateThemeIcon(theme) {
+                if (theme === "dark") {
+                    themeIcon.classList.remove("fa-moon");
+                    themeIcon.classList.add("fa-sun");
+                } else {
+                    themeIcon.classList.remove("fa-sun");
+                    themeIcon.classList.add("fa-moon");
+                }
+            }
+
+            themeToggleBtn.addEventListener("click", () => {
+                const currentTheme = htmlElement.getAttribute("data-bs-theme");
+                const newTheme = currentTheme === "light" ? "dark" : "light";
+                htmlElement.setAttribute("data-bs-theme", newTheme);
+                localStorage.setItem("portfolio_theme", newTheme);
+                updateThemeIcon(newTheme);
+                showToast(`Switched to ${newTheme} mode!`);
+            });
+
+            // ==========================================
+            // 3. Scroll Event Listeners:
+            //    - Top reading progress bar
+            //    - Navbar sticky blur state
+            //    - Active Nav Link spy
+            //    - Back to top button visibility
+            // ==========================================
+            window.addEventListener("scroll", () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                
+                // Reading progress bar calculation
+                const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                scrollProgressBar.style.width = `${scrollPercent}%`;
+
+                // Navbar sticky styling
+                if (scrollTop > 40) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+
+                // Back to top button
+                if (scrollTop > 350) {
+                    backToTopBtn.classList.add("visible");
+                } else {
+                    backToTopBtn.classList.remove("visible");
+                }
+
+                // Active section spy
+                let currentSectionId = "";
+                const scrollOffset = 120;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollTop >= (sectionTop - scrollOffset)) {
+                        currentSectionId = section.getAttribute("id");
+                    }
+                });
+
+                if (window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 20) {
+                    currentSectionId = sections[sections.length - 1].getAttribute("id");
+                }
+
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${currentSectionId}`) {
+                        link.classList.add("active");
+                    }
+                });
+            }, { passive: true });
+
+            // ==========================================
+            // 4. Back to Top Smooth Click Listener
+            // ==========================================
+            backToTopBtn.addEventListener("click", () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+
+            // ==========================================
+            // 5. Auto Close Mobile Navigation Menu on Click
+            // ==========================================
+            navLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    if (navbarCollapse.classList.contains("show")) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                        if (bsCollapse) bsCollapse.hide();
+                    }
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener("click", (e) => {
+                if (navbarCollapse.classList.contains("show") && !navbar.contains(e.target)) {
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                    if (bsCollapse) bsCollapse.hide();
+                }
+            });
+
+            // ==========================================
+            // 6. Dynamic Typewriter Effect for Hero
+            // ==========================================
+            const typewriterWords = [
+                "Full Stack Software Developer",
+                "BSIT Undergrad @ NCST",
+                "Vue.js & PHP Craftsman",
+                "Database & System Architect"
+            ];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typeSpeed = 100;
+
+            function typeWriter() {
+                const currentWord = typewriterWords[wordIndex];
+                
+                if (isDeleting) {
+                    typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                    typeSpeed = 45;
+                } else {
+                    typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                    typeSpeed = 100;
+                }
+
+                if (!isDeleting && charIndex === currentWord.length) {
+                    isDeleting = true;
+                    typeSpeed = 1800; // Pause at end of word
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % typewriterWords.length;
+                    typeSpeed = 400; // Pause before typing next word
+                }
+
+                setTimeout(typeWriter, typeSpeed);
+            }
+            typeWriter();
+
+            // ==========================================
+            // 7. Copy Email Event Listeners with Clipboard API
+            // ==========================================
+            const copyEmailBtns = document.querySelectorAll(".copy-email-btn");
+            copyEmailBtns.forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const email = btn.getAttribute("data-email") || "rmaramba08@gmail.com";
+                    
+                    navigator.clipboard.writeText(email).then(() => {
+                        showToast(`Copied ${email} to clipboard!`);
+                    }).catch(() => {
+                        // Fallback
+                        const tempInput = document.createElement("input");
+                        tempInput.value = email;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(tempInput);
+                        showToast(`Copied ${email} to clipboard!`);
+                    });
+                });
+            });
+
+            // ==========================================
+            // 8. Skills Filtering Event Listeners
+            // ==========================================
+            const skillFilterBtns = document.querySelectorAll("#skillFilterContainer .filter-btn");
+            const skillCardItems = document.querySelectorAll(".skill-card-item");
+
+            skillFilterBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    skillFilterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+
+                    const selectedCategory = btn.getAttribute("data-category");
+
+                    skillCardItems.forEach(card => {
+                        const cardCategory = card.getAttribute("data-category");
+                        if (selectedCategory === "all" || cardCategory === selectedCategory) {
+                            card.style.display = "block";
+                            setTimeout(() => {
+                                card.style.opacity = "1";
+                                card.style.transform = "scale(1)";
+                            }, 50);
+                        } else {
+                            card.style.opacity = "0";
+                            card.style.transform = "scale(0.95)";
+                            setTimeout(() => {
+                                card.style.display = "none";
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // ==========================================
+            // 9. Projects Filtering Event Listeners
+            // ==========================================
+            const projectFilterBtns = document.querySelectorAll("#projectFilterContainer .filter-btn");
+            const projectCardItems = document.querySelectorAll(".project-card-item");
+
+            projectFilterBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    projectFilterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+
+                    const selectedFilter = btn.getAttribute("data-filter");
+
+                    projectCardItems.forEach(card => {
+                        const cardCategory = card.getAttribute("data-category");
+                        if (selectedFilter === "all" || cardCategory === selectedFilter) {
+                            card.style.display = "block";
+                            setTimeout(() => {
+                                card.style.opacity = "1";
+                                card.style.transform = "scale(1)";
+                            }, 50);
+                        } else {
+                            card.style.opacity = "0";
+                            card.style.transform = "scale(0.95)";
+                            setTimeout(() => {
+                                card.style.display = "none";
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // ==========================================
+            // 10. Project Modal Quick View Event Listener
+            // ==========================================
+            const viewProjectBtns = document.querySelectorAll(".view-project-btn");
+            const modalEl = document.getElementById("projectDetailsModal");
+            const modalProjectTitle = document.getElementById("modalProjectTitle");
+            const modalProjectCategory = document.getElementById("modalProjectCategory");
+            const modalProjectImg = document.getElementById("modalProjectImg");
+            const modalProjectDesc = document.getElementById("modalProjectDesc");
+            const modalProjectTags = document.getElementById("modalProjectTags");
+            const modalGithubBtn = document.getElementById("modalGithubBtn");
+            const projectModalInstance = new bootstrap.Modal(modalEl);
+
+            viewProjectBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const title = btn.getAttribute("data-title");
+                    const category = btn.getAttribute("data-category");
+                    const img = btn.getAttribute("data-img");
+                    const desc = btn.getAttribute("data-desc");
+                    const tags = (btn.getAttribute("data-tags") || "").split(",");
+                    const github = btn.getAttribute("data-github") || "https://github.com";
+
+                    modalProjectTitle.textContent = title;
+                    modalProjectCategory.textContent = category;
+                    modalProjectImg.src = img;
+                    modalProjectImg.alt = title;
+                    modalProjectDesc.textContent = desc;
+                    modalGithubBtn.href = github;
+
+                    modalProjectTags.innerHTML = "";
+                    tags.forEach(tag => {
+                        const span = document.createElement("span");
+                        span.className = "tech-pill";
+                        span.textContent = tag.trim();
+                        modalProjectTags.appendChild(span);
+                    });
+
+                    projectModalInstance.show();
+                });
+            });
+
+            // ==========================================
+            // 11. Interactive 3D Card Tilt Effect on Mousemove
+            // ==========================================
+            const tiltCards = document.querySelectorAll("[data-tilt]");
+            tiltCards.forEach(card => {
+                card.addEventListener("mousemove", (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    // Calculate rotation angles (max +/- 8deg)
+                    const rotateX = ((y - centerY) / centerY) * -6;
+                    const rotateY = ((x - centerX) / centerX) * 6;
+
+                    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+                });
+
+                card.addEventListener("mouseleave", () => {
+                    card.style.transform = "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0)";
+                });
+            });
+
+            // ==========================================
+            // 12. Contact Form Live Validation & Submit Event Listener
+            // ==========================================
+            const formInputs = contactForm.querySelectorAll("input, textarea");
+
+            // Character count listener for textarea
+            contactMessage.addEventListener("input", function() {
+                const currentLength = this.value.length;
+                messageCharCounter.textContent = `${currentLength} / 500 characters`;
+                if (currentLength >= 480) {
+                    messageCharCounter.style.color = "#ef4444";
+                } else {
+                    messageCharCounter.style.color = "var(--text-muted)";
+                }
+            });
+
+            // Real-time input validation on input & blur
+            formInputs.forEach(input => {
+                input.addEventListener("input", () => {
+                    if (input.checkValidity()) {
+                        input.classList.remove("is-invalid");
+                        input.classList.add("is-valid");
+                    } else {
+                        input.classList.remove("is-valid");
+                    }
+                });
+
+                input.addEventListener("blur", () => {
+                    if (!input.checkValidity()) {
+                        input.classList.add("is-invalid");
+                    }
+                });
+            });
+
+            // Form Submit Listener
+            contactForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                let isFormValid = true;
+                formInputs.forEach(input => {
+                    if (!input.checkValidity()) {
+                        input.classList.add("is-invalid");
+                        isFormValid = false;
+                    } else {
+                        input.classList.remove("is-invalid");
+                        input.classList.add("is-valid");
+                    }
+                });
+
+                if (!isFormValid) {
+                    showToast("Please complete all required fields correctly.", false);
+                    return;
+                }
+
+                // Show sending / loading state
+                submitFormBtn.disabled = true;
+                submitBtnSpinner.classList.remove("d-none");
+                submitBtnIcon.classList.add("d-none");
+                submitBtnText.textContent = "Sending Message...";
+
+                // Simulate asynchronous transmission
+                setTimeout(() => {
+                    submitFormBtn.disabled = false;
+                    submitBtnSpinner.classList.add("d-none");
+                    submitBtnIcon.classList.remove("d-none");
+                    submitBtnText.textContent = "Send Message";
+
+                    showToast("Thank you, Rafael! Your message has been received.");
+                    contactForm.reset();
+                    messageCharCounter.textContent = "0 / 500 characters";
+                    formInputs.forEach(input => {
+                        input.classList.remove("is-valid");
+                        input.classList.remove("is-invalid");
+                    });
+                }, 1200);
+            });
+
+            // ==========================================
+            // 13. Animated Statistics Counter & Skill Bars
+            // ==========================================
+            let statsCounted = false;
+            let skillsAnimated = false;
+
+            function animateCounters() {
+                const statNumbers = document.querySelectorAll(".stat-number");
+                statNumbers.forEach(num => {
+                    const target = parseInt(num.getAttribute("data-target"), 10);
+                    let count = 0;
+                    const increment = target / 35;
+                    const updateCount = () => {
+                        count += increment;
+                        if (count < target) {
+                            num.textContent = Math.ceil(count) + (target === 100 ? "%" : "+");
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            num.textContent = target + (target === 100 ? "%" : "+");
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            function animateSkillBars() {
+                const skillProgressFills = document.querySelectorAll(".skill-progress-fill");
+                skillProgressFills.forEach(fill => {
+                    const targetWidth = fill.getAttribute("data-progress") || "50";
+                    fill.style.width = `${targetWidth}%`;
+                });
+            }
+
+            // ==========================================
+            // 14. Intersection Observer for Scroll Reveals
+            // ==========================================
+            const revealElements = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+
+                        // Trigger stats when stat strip is visible
+                        if (!statsCounted && (entry.target.id === "statsStrip" || entry.target.contains(document.getElementById("statsStrip")))) {
+                            statsCounted = true;
+                            animateCounters();
+                        }
+
+                        // Trigger skill bars animation when skills section is visible
+                        if (!skillsAnimated && (entry.target.id === "skills" || entry.target.closest("#skills"))) {
+                            skillsAnimated = true;
+                            animateSkillBars();
+                        }
+
+                        // Also check directly for skills
+                        if (entry.target.classList.contains("skill-card-item")) {
+                            const bar = entry.target.querySelector(".skill-progress-fill");
+                            if (bar) {
+                                bar.style.width = `${bar.getAttribute("data-progress")}%`;
+                            }
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(el => observer.observe(el));
+
+            // Observe stats strip specifically
+            const statsStrip = document.getElementById("statsStrip");
+            if (statsStrip) observer.observe(statsStrip);
+
+            // Observe skills section
+            const skillsSection = document.getElementById("skills");
+            if (skillsSection) observer.observe(skillsSection);
+
+            // ==========================================
+            // 15. Keyboard Accessibility Event Listeners
+            // ==========================================
+            window.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    // Close modal if open
+                    if (modalEl.classList.contains("show")) {
+                        projectModalInstance.hide();
+                    }
+                    // Close mobile navbar if open
+                    if (navbarCollapse.classList.contains("show")) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                        if (bsCollapse) bsCollapse.hide();
+                    }
+                }
+            });
+
+            // ==========================================
+            // 16. Dynamic Profile Pose Hover & Tap Event Listeners
+            // ==========================================
+            const profilePoseContainer = document.getElementById("profilePoseContainer");
+            const poseBadgeText = document.getElementById("poseBadgeText");
+            const poseBadgeIcon = document.getElementById("poseBadgeIcon");
+            const profileImagesStack = document.getElementById("profileImagesStack");
+
+            if (profilePoseContainer) {
+                // Mouseenter event: update badge message
+                profilePoseContainer.addEventListener("mouseenter", () => {
+                    if (poseBadgeText) poseBadgeText.textContent = "👋 Nice to meet you!";
+                });
+
+                // Mouseleave event: reset badge message if not locked active
+                profilePoseContainer.addEventListener("mouseleave", () => {
+                    if (!profilePoseContainer.classList.contains("pose-active")) {
+                        if (poseBadgeText) poseBadgeText.textContent = "Hover to Pose";
+                    } else {
+                        if (poseBadgeText) poseBadgeText.textContent = "Pose Locked ✨";
+                    }
+                    // Reset 3D tilt
+                    if (profileImagesStack) {
+                        profileImagesStack.style.transform = "";
+                    }
+                });
+
+                // Click / Tap event: toggle pose lock for touch screens and desktop clicks
+                profilePoseContainer.addEventListener("click", () => {
+                    profilePoseContainer.classList.toggle("pose-active");
+                    const isPoseActive = profilePoseContainer.classList.contains("pose-active");
+                    if (isPoseActive) {
+                        if (poseBadgeText) poseBadgeText.textContent = "Pose Locked ✨";
+                        showToast("✨ Switched to welcoming smile pose!");
+                    } else {
+                        if (poseBadgeText) poseBadgeText.textContent = "Hover to Pose";
+                        showToast("Switched back to formal pose.");
+                    }
+                });
+
+                // Interactive 3D Perspective Tilt tracking mouse inside portrait
+                profilePoseContainer.addEventListener("mousemove", (e) => {
+                    if (!profileImagesStack) return;
+                    const rect = profilePoseContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    profileImagesStack.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
